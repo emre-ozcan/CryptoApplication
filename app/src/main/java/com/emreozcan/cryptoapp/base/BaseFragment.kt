@@ -12,9 +12,9 @@ import java.lang.IllegalArgumentException
 /**
  * Created by @Emre Özcan on 18.04.2022
  */
-abstract class BaseFragment<VB: ViewBinding, VM: ViewModel>(
+abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private val bindingInflater: (inflater: LayoutInflater) -> VB
-): Fragment(){
+) : Fragment() {
 
     private var _binding: VB? = null
     protected val binding: VB get() = _binding as VB
@@ -31,7 +31,7 @@ abstract class BaseFragment<VB: ViewBinding, VM: ViewModel>(
     ): View? {
         _binding = bindingInflater.invoke(inflater)
 
-        if (_binding == null){
+        if (_binding == null) {
             throw IllegalArgumentException("Binding null")
         }
 

@@ -7,7 +7,7 @@ import javax.inject.Inject
 /**
  * Created by @Emre Özcan on 19.04.2022
  */
-class DetailRepository @Inject constructor(private val apiFactory: ApiFactory): BaseRepository() {
+class DetailRepository @Inject constructor(private val apiFactory: ApiFactory) : BaseRepository() {
 
     suspend fun getDetail(
         apiKey: String,

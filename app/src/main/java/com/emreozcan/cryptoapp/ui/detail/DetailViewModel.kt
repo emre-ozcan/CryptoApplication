@@ -13,9 +13,9 @@ import javax.inject.Inject
  * Created by @Emre Özcan on 19.04.2022
  */
 @HiltViewModel
-class DetailViewModel @Inject constructor(private val repository: DetailRepository): ViewModel() {
+class DetailViewModel @Inject constructor(private val repository: DetailRepository) : ViewModel() {
 
-    val detailResponse : MutableLiveData<DetailResponse?> = MutableLiveData()
+    val detailResponse: MutableLiveData<DetailResponse?> = MutableLiveData()
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     val onError: MutableLiveData<String?> = MutableLiveData()
 
@@ -24,8 +24,7 @@ class DetailViewModel @Inject constructor(private val repository: DetailReposito
         symbol: String
     ) = viewModelScope.launch {
         isLoading.value = true
-        val request = repository.getDetail(apiKey, symbol)
-        when(request){
+        when (val request = repository.getDetail(apiKey, symbol)) {
             is NetworkResult.Success -> {
                 isLoading.value = false
                 detailResponse.value = request.data
@@ -36,6 +35,4 @@ class DetailViewModel @Inject constructor(private val repository: DetailReposito
             }
         }
     }
-
-
 }

@@ -9,12 +9,12 @@ import com.emreozcan.cryptoapp.utils.loadImage
  */
 class CoinBinding {
 
-    companion object{
+    companion object {
         //https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png
 
         @BindingAdapter("load_image")
         @JvmStatic
-        fun loadImage(imageView: ImageView, coinImage: String){
+        fun loadImage(imageView: ImageView, coinImage: String) {
             val imageUrl = "https://s2.coinmarketcap.com/static/img/coins/64x64/$coinImage.png"
             imageView.loadImage(imageUrl)
         }

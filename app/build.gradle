@@ -41,10 +41,10 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -52,7 +52,7 @@ dependencies {
 
     def nav_version = "2.4.2"
     def retrofit_version ="2.9.0"
-    def hilt_version = "2.38.1"
+    def hilt_version = "2.42"
 
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -64,7 +64,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
 
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.61"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.0"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -72,11 +72,11 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
 
     // OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:3.14.7'
-    implementation "com.squareup.okhttp3:logging-interceptor:3.12.3"
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
 
     // Gson
-    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.google.code.gson:gson:2.8.9'
 
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
@@ -84,5 +84,5 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     // Coil
-    implementation("io.coil-kt:coil:1.2.2")
+    implementation("io.coil-kt:coil:1.4.0")
 }
