@@ -13,19 +13,18 @@ import javax.inject.Inject
  * Created by @Emre Özcan on 18.04.2022
  */
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: HomeRepository): ViewModel() {
+class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
 
     val cryptoResponse: MutableLiveData<CryptoResponse?> = MutableLiveData()
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
-    val onError : MutableLiveData<String?> = MutableLiveData()
+    val onError: MutableLiveData<String?> = MutableLiveData()
 
     fun getData(
         apiKey: String,
         limit: String
     ) = viewModelScope.launch {
         isLoading.value = true
-        val request = repository.getData(apiKey, limit)
-        when(request){
+        when (val request = repository.getData(apiKey, limit)) {
             is NetworkResult.Success -> {
                 cryptoResponse.value = request.data
                 isLoading.value = false

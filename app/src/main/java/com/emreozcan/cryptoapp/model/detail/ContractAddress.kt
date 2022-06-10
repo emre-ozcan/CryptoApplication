@@ -3,7 +3,7 @@ package com.emreozcan.cryptoapp.model.detail
 
 import com.google.gson.annotations.SerializedName
 
-data class ContractAddres(
+data class ContractAddress(
     @SerializedName("contract_address")
     val contractAddress: String?,
     @SerializedName("platform")

@@ -32,7 +32,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     override fun observeEvents() {
-        with(viewModel){
+        with(viewModel) {
             cryptoResponse.observe(viewLifecycleOwner, Observer {
                 it?.let {
                     it.data?.let { it1 -> setRecycler(it1) }
@@ -48,11 +48,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         }
     }
 
-    private fun setRecycler(data: List<Data>){
-        val mAdapter = HomeRecyclerAdapter(object: ItemClickListener{
+    private fun setRecycler(data: List<Data>) {
+        val mAdapter = HomeRecyclerAdapter(object : ItemClickListener {
             override fun onItemClick(coin: Data) {
-                if (coin.symbol != null){
-                    val navigation = HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin.symbol)
+                if (coin.symbol != null) {
+                    val navigation =
+                        HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin.symbol)
                     Navigation.findNavController(requireView()).navigate(navigation)
                 }
             }
@@ -61,7 +62,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         mAdapter.setList(data)
     }
 
-    private fun handleViews(isLoading: Boolean = false){
+    private fun handleViews(isLoading: Boolean = false) {
         binding.rvHome.isVisible = !isLoading
         binding.pbHome.isVisible = isLoading
     }

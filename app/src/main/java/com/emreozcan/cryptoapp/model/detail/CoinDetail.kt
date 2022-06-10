@@ -7,7 +7,7 @@ data class CoinDetail(
     @SerializedName("category")
     val category: String?,
     @SerializedName("contract_address")
-    val contractAddress: List<ContractAddres>?,
+    val contractAddress: List<ContractAddress>?,
     @SerializedName("date_added")
     val dateAdded: String?,
     @SerializedName("date_launched")
