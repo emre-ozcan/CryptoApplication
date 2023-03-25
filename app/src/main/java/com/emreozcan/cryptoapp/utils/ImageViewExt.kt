@@ -11,7 +11,7 @@ import com.emreozcan.cryptoapp.di.CryptoApp.Companion.getAppContext
  * Created by @Emre Özcan on 19.04.2022
  */
 
-fun ImageView.loadImage(id: String?) = this.load(BuildConfig.BASE_BASE_URL.plus("$id.png")) {
+fun ImageView.loadImage(id: String?) = this.load(BuildConfig.BASE_IMAGE_URL.plus("$id.png")) {
     crossfade(true)
     crossfade(500)
     placeholder(createPlaceHolder())
