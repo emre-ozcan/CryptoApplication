@@ -2,7 +2,6 @@ package com.emreozcan.cryptoapp.di
 
 import com.emreozcan.cryptoapp.BuildConfig
 import com.emreozcan.cryptoapp.network.ApiFactory
-import com.emreozcan.cryptoapp.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,7 +50,7 @@ object NetworkModule {
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
+        return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL).client(okHttpClient)
             .addConverterFactory(gsonConverterFactory).build()
     }
 

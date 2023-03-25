@@ -20,8 +20,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            buildConfigField "String", "BASE_URL", '"https://pro-api.coinmarketcap.com/"'
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+
+        }
         release {
+            buildConfigField "String", "BASE_URL", '"https://pro-api.coinmarketcap.com/"'
             minifyEnabled false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
