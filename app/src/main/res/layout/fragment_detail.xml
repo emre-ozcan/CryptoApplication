@@ -12,32 +12,32 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="32dp"
-        android:src="@drawable/ic_launcher_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvDetailTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="TextView"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivDetail" />
+        app:layout_constraintTop_toBottomOf="@+id/ivDetail"
+        tools:text="Coin Title" />
 
     <TextView
         android:id="@+id/tvDetailSymbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDetailTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailTitle"
+        tools:text="Coin Symbol" />
 
     <TextView
         android:id="@+id/tvDetailDescription"
@@ -46,10 +46,12 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:text="TextView"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDetailSymbol" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailSymbol"
+        tools:text="Coin Description will show here..." />
 
     <ProgressBar
         android:id="@+id/pbDetail"
@@ -59,12 +61,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/detailGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:constraint_referenced_ids="ivDetail,tvDetailDescription,tvDetailSymbol,tvDetailTitle" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

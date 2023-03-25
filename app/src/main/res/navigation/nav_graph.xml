@@ -21,7 +21,7 @@
         android:label="Details"
         tools:layout="@layout/fragment_detail" >
         <argument
-            android:name="symbol"
-            app:argType="string" />
+            android:name="coin"
+            app:argType="com.emreozcan.cryptoapp.model.home.Data" />
     </fragment>
 </navigation>

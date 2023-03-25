@@ -1,6 +1,9 @@
 package com.emreozcan.cryptoapp.ui.detail
 
+import android.os.Bundle
+import android.transition.TransitionInflater
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -21,9 +24,30 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
     override val viewModel by viewModels<DetailViewModel>()
     private val args by navArgs<DetailFragmentArgs>()
 
-
     override fun onCreateFinished() {
-        viewModel.getDetail(args.symbol)
+        initTransitions()
+        initViews()
+        args.coin.symbol?.let {
+            viewModel.getDetail(it)
+        }
+    }
+
+    private fun initViews() = with(binding) {
+        ivDetail.loadImage("https://s2.coinmarketcap.com/static/img/coins/128x128/${args.coin.id}.png")
+        tvDetailTitle.text = args.coin.name
+        tvDetailSymbol.text = args.coin.symbol
+    }
+
+    private fun initTransitions() {
+        val symbol = args.coin.symbol
+
+        ViewCompat.setTransitionName(binding.ivDetail,"image${symbol}")
+        ViewCompat.setTransitionName(binding.tvDetailTitle,"title${symbol}")
+        ViewCompat.setTransitionName(binding.tvDetailSymbol,"symbol${symbol}")
+
+        val animation = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = animation
+        sharedElementReturnTransition = animation
     }
 
     override fun initializeListeners() {}
@@ -46,22 +70,19 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
         val gson = Gson()
         val json = gson.toJson(it?.data)
         val jsonObject = JSONObject(json)
-        val jsonArray = jsonObject[args.symbol] as JSONArray
+        val jsonArray = jsonObject[args.coin.symbol.toString()] as JSONArray
 
         val coin = gson.fromJson(jsonArray.getJSONObject(0).toString(), CoinDetail::class.java)
 
         coin?.let {
             with(binding) {
-                ivDetail.loadImage(it.logo)
-                tvDetailTitle.text = it.name
-                tvDetailSymbol.text = it.symbol
                 tvDetailDescription.text = it.description
             }
         }
     }
 
     private fun handleView(isLoading: Boolean = false) {
-        binding.detailGroup.isVisible = !isLoading
+        binding.tvDetailDescription.isVisible = !isLoading
         binding.pbDetail.isVisible = isLoading
     }
 }

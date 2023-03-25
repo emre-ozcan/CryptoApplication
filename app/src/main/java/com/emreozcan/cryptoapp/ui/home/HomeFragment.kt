@@ -1,11 +1,14 @@
 package com.emreozcan.cryptoapp.ui.home
 
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.emreozcan.cryptoapp.base.BaseFragment
 import com.emreozcan.cryptoapp.databinding.FragmentHomeBinding
 import com.emreozcan.cryptoapp.model.home.Data
@@ -49,15 +52,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     private fun setRecycler(data: List<Data>) {
         val mAdapter = HomeRecyclerAdapter(object : ItemClickListener {
-            override fun onItemClick(coin: Data) {
+            override fun onItemClick(
+                coin: Data,
+                imageView: ImageView,
+                titleTextView: TextView,
+                symbolTextView: TextView
+            ) {
                 if (coin.symbol != null) {
+                    val extras = FragmentNavigatorExtras(
+                        imageView to "image${coin.symbol}",
+                        titleTextView to "title${coin.symbol}",
+                        symbolTextView to "symbol${coin.symbol}"
+                    )
                     val navigation =
-                        HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin.symbol)
-                    Navigation.findNavController(requireView()).navigate(navigation)
+                        HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin)
+                    Navigation.findNavController(requireView()).navigate(navigation, extras)
                 }
             }
         })
-        binding.rvHome.adapter = mAdapter
+
+        binding.rvHome.apply {
+            this.adapter = mAdapter
+            postponeEnterTransition()
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
+        }
         mAdapter.setList(data)
     }
 
