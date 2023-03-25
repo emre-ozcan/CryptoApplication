@@ -20,11 +20,10 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     val onError: MutableLiveData<String?> = MutableLiveData()
 
     fun getData(
-        apiKey: String,
         limit: String
     ) = viewModelScope.launch {
         isLoading.value = true
-        when (val request = repository.getData(apiKey, limit)) {
+        when (val request = repository.getData(limit)) {
             is NetworkResult.Success -> {
                 cryptoResponse.value = request.data
                 isLoading.value = false

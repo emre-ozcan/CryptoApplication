@@ -8,7 +8,6 @@ import com.emreozcan.cryptoapp.base.BaseFragment
 import com.emreozcan.cryptoapp.databinding.FragmentDetailBinding
 import com.emreozcan.cryptoapp.model.detail.CoinDetail
 import com.emreozcan.cryptoapp.model.detail.DetailResponse
-import com.emreozcan.cryptoapp.utils.Constants.API_KEY
 import com.emreozcan.cryptoapp.utils.loadImage
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +23,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
 
 
     override fun onCreateFinished() {
-        viewModel.getDetail(API_KEY, args.symbol)
+        viewModel.getDetail(args.symbol)
     }
 
     override fun initializeListeners() {}

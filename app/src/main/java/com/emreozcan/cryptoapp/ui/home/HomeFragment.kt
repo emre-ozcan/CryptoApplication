@@ -9,7 +9,6 @@ import androidx.navigation.Navigation
 import com.emreozcan.cryptoapp.base.BaseFragment
 import com.emreozcan.cryptoapp.databinding.FragmentHomeBinding
 import com.emreozcan.cryptoapp.model.home.Data
-import com.emreozcan.cryptoapp.utils.Constants.API_KEY
 import com.emreozcan.cryptoapp.utils.Constants.LIMIT
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +20,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getData(API_KEY, LIMIT)
+        viewModel.getData(LIMIT)
     }
 
     override fun onCreateFinished() {
