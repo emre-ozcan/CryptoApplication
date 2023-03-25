@@ -33,7 +33,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
     }
 
     private fun initViews() = with(binding) {
-        ivDetail.loadImage("https://s2.coinmarketcap.com/static/img/coins/128x128/${args.coin.id}.png")
+        ivDetail.loadImage(args.coin.id.toString())
         tvDetailTitle.text = args.coin.name
         tvDetailSymbol.text = args.coin.symbol
     }
@@ -41,11 +41,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
     private fun initTransitions() {
         val symbol = args.coin.symbol
 
-        ViewCompat.setTransitionName(binding.ivDetail,"image${symbol}")
-        ViewCompat.setTransitionName(binding.tvDetailTitle,"title${symbol}")
-        ViewCompat.setTransitionName(binding.tvDetailSymbol,"symbol${symbol}")
+        ViewCompat.setTransitionName(binding.ivDetail, "image${symbol}")
+        ViewCompat.setTransitionName(binding.tvDetailTitle, "title${symbol}")
+        ViewCompat.setTransitionName(binding.tvDetailSymbol, "symbol${symbol}")
 
-        val animation = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        val animation =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
         sharedElementEnterTransition = animation
         sharedElementReturnTransition = animation
     }

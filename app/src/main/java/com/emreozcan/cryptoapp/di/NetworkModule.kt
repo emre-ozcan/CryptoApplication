@@ -39,10 +39,12 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClint(httpLoggingInterceptor: HttpLoggingInterceptor, apiKeyInterceptor: ApiKeyInterceptor): OkHttpClient {
+    fun provideHttpClint(
+        httpLoggingInterceptor: HttpLoggingInterceptor, apiKeyInterceptor: ApiKeyInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(apiKeyInterceptor).addInterceptor(httpLoggingInterceptor)
-            .build()
+            .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(apiKeyInterceptor)
+            .addInterceptor(httpLoggingInterceptor).build()
     }
 
     @Singleton
@@ -54,8 +56,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofitInstance(
-        okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
+        okHttpClient: OkHttpClient, gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL).client(okHttpClient)
             .addConverterFactory(gsonConverterFactory).build()

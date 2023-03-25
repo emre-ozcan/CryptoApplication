@@ -10,7 +10,6 @@ import retrofit2.http.Query
  * Created by @Emre Özcan on 18.04.2022
  */
 interface ApiFactory {
-
     @GET("v1/cryptocurrency/listings/latest")
     suspend fun getData(
         @Query("limit") limit: String

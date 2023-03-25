@@ -24,12 +24,14 @@ android {
         debug {
             debuggable true
             buildConfigField "String", "BASE_URL", '"https://pro-api.coinmarketcap.com/"'
+            buildConfigField "String", "BASE_IMAGE_URL", '"https://s2.coinmarketcap.com/static/img/coins/128x128/"'
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
 
         }
         release {
             buildConfigField "String", "BASE_URL", '"https://pro-api.coinmarketcap.com/"'
+            buildConfigField "String", "BASE_IMAGE_URL", '"https://s2.coinmarketcap.com/static/img/coins/128x128/"'
             minifyEnabled false
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

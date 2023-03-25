@@ -53,10 +53,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     private fun setRecycler(data: List<Data>) {
         val mAdapter = HomeRecyclerAdapter(object : ItemClickListener {
             override fun onItemClick(
-                coin: Data,
-                imageView: ImageView,
-                titleTextView: TextView,
-                symbolTextView: TextView
+                coin: Data, imageView: ImageView, titleTextView: TextView, symbolTextView: TextView
             ) {
                 if (coin.symbol != null) {
                     val extras = FragmentNavigatorExtras(
@@ -64,8 +61,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
                         titleTextView to "title${coin.symbol}",
                         symbolTextView to "symbol${coin.symbol}"
                     )
-                    val navigation =
-                        HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin)
+                    val navigation = HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin)
                     Navigation.findNavController(requireView()).navigate(navigation, extras)
                 }
             }
