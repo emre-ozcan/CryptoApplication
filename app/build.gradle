@@ -65,6 +65,7 @@ dependencies {
     def nav_version = '2.5.3'
     def retrofit_version = "2.9.0"
     def hilt_version = "2.45"
+    def paging_version = "3.1.1"
 
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -96,6 +97,9 @@ dependencies {
 
     // Coil
     implementation('io.coil-kt:coil:2.2.2')
+
+    // Paging3
+    implementation("androidx.paging:paging-runtime:$paging_version")
 }
 
 kapt {

@@ -1,6 +1,5 @@
 package com.emreozcan.cryptoapp.ui.detail
 
-import android.os.Bundle
 import android.transition.TransitionInflater
 import android.widget.Toast
 import androidx.core.view.ViewCompat
@@ -33,17 +32,17 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
     }
 
     private fun initViews() = with(binding) {
-        ivDetail.loadImage(args.coin.id.toString())
-        tvDetailTitle.text = args.coin.name
-        tvDetailSymbol.text = args.coin.symbol
+        imageViewDetailFragment.loadImage(args.coin.id.toString())
+        titleTextDetailFragment.text = args.coin.name
+        symbolTextDetailFragment.text = args.coin.symbol
     }
 
     private fun initTransitions() {
         val symbol = args.coin.symbol
 
-        ViewCompat.setTransitionName(binding.ivDetail, "image${symbol}")
-        ViewCompat.setTransitionName(binding.tvDetailTitle, "title${symbol}")
-        ViewCompat.setTransitionName(binding.tvDetailSymbol, "symbol${symbol}")
+        ViewCompat.setTransitionName(binding.imageViewDetailFragment, "image${symbol}")
+        ViewCompat.setTransitionName(binding.titleTextDetailFragment, "title${symbol}")
+        ViewCompat.setTransitionName(binding.symbolTextDetailFragment, "symbol${symbol}")
 
         val animation =
             TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
@@ -77,13 +76,13 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
 
         coin?.let {
             with(binding) {
-                tvDetailDescription.text = it.description
+                descriptionTextDetailFragment.text = it.description
             }
         }
     }
 
     private fun handleView(isLoading: Boolean = false) {
-        binding.tvDetailDescription.isVisible = !isLoading
-        binding.pbDetail.isVisible = isLoading
+        binding.descriptionTextDetailFragment.isVisible = !isLoading
+        binding.progressBarDetailFragment.isVisible = isLoading
     }
 }

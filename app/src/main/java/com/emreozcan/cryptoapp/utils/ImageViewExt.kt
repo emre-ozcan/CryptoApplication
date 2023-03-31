@@ -1,6 +1,5 @@
 package com.emreozcan.cryptoapp.utils
 
-import android.content.Context
 import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load

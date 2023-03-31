@@ -1,5 +1,18 @@
 <resources>
+    <!--General-->
     <string name="app_name">Crypto App</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="error_message">Bilinmeyen bir hata oluştu</string>
+    <string name="error_message">Unknown error occurred</string>
+
+    <!--Home Fragment-->
+    <string name="home_fragment_toolbar_text">Crypto App</string>
+    <string name="home_retry">Retry</string>
+    <string name="error_message_footer_button">Retry</string>
+    <string name="error_message_no_internet_connection">No Internet connection</string>
+    <string name="home_retry_text">Results could not be loaded</string>
+
+    <!--Detail Fragment-->
+    <string name="detail_fragment_toolbar_text">Details</string>
+
+    <!--RecyclerView Footer-->
+    <string name="error_message_footer">Results could not be loaded</string>
 </resources>

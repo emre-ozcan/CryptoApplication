@@ -3,7 +3,6 @@ package com.emreozcan.cryptoapp.network
 import com.emreozcan.cryptoapp.model.detail.DetailResponse
 import com.emreozcan.cryptoapp.model.home.CryptoResponse
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Query
 
 /**
@@ -12,7 +11,8 @@ import retrofit2.http.Query
 interface ApiFactory {
     @GET("v1/cryptocurrency/listings/latest")
     suspend fun getData(
-        @Query("limit") limit: String
+        @Query("limit") limit: Int,
+        @Query("start") start: Int
     ): CryptoResponse
 
     @GET("v2/cryptocurrency/info")

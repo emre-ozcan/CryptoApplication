@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Data(
+data class CryptoModel(
     @SerializedName("date_added")
     val dateAdded: String?,
     @SerializedName("id")

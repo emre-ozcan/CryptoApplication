@@ -1,5 +1,8 @@
 package com.emreozcan.cryptoapp.ui.home
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
 import com.emreozcan.cryptoapp.base.BaseRepository
 import com.emreozcan.cryptoapp.network.ApiFactory
 import javax.inject.Inject
@@ -9,9 +12,12 @@ import javax.inject.Inject
  */
 class HomeRepository @Inject constructor(private val apiFactory: ApiFactory) : BaseRepository() {
 
-    suspend fun getData(
-        limit: String
-    ) = safeApiRequest {
-        apiFactory.getData(limit)
-    }
+   fun getData() = Pager(
+       config = PagingConfig(
+           pageSize = 20,
+           maxSize = 100,
+           enablePlaceholders = false
+       ),
+       pagingSourceFactory = {CryptoPagingSource(apiFactory = apiFactory)}
+   ).liveData
 }
