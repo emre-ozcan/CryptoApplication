@@ -2,7 +2,7 @@ package com.emreozcan.cryptoapp.di
 
 import com.emreozcan.cryptoapp.BuildConfig
 import com.emreozcan.cryptoapp.network.ApiFactory
-import com.emreozcan.cryptoapp.utils.Constants.BASE_URL
+import com.emreozcan.cryptoapp.network.ApiKeyInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,10 +33,18 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClint(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideHttpApiKeyInterceptor(): ApiKeyInterceptor {
+        return ApiKeyInterceptor()
+    }
+
+    @Singleton
+    @Provides
+    fun provideHttpClint(
+        httpLoggingInterceptor: HttpLoggingInterceptor, apiKeyInterceptor: ApiKeyInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(httpLoggingInterceptor)
-            .build()
+            .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(apiKeyInterceptor)
+            .addInterceptor(httpLoggingInterceptor).build()
     }
 
     @Singleton
@@ -48,10 +56,9 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofitInstance(
-        okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
+        okHttpClient: OkHttpClient, gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
+        return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL).client(okHttpClient)
             .addConverterFactory(gsonConverterFactory).build()
     }
 

@@ -1,8 +1,11 @@
 package com.emreozcan.cryptoapp.model.home
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class USD(
     @SerializedName("fully_diluted_market_cap")
     val fullyDilutedMarketCap: Double?,
@@ -30,4 +33,4 @@ data class USD(
     val volume24h: Double?,
     @SerializedName("volume_change_24h")
     val volumeChange24h: Double?
-)
+): Parcelable

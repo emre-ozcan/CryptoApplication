@@ -25,8 +25,7 @@ abstract class BaseRepository {
                 when (throwable) {
                     is HttpException -> {
                         NetworkResult.Error(
-                            false,
-                            errorBodyParser(throwable.response()?.errorBody()?.string())
+                            false, errorBodyParser(throwable.response()?.errorBody()?.string())
                         )
                     }
                     else -> NetworkResult.Error(true, throwable.localizedMessage)

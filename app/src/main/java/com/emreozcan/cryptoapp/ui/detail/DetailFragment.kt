@@ -1,6 +1,8 @@
 package com.emreozcan.cryptoapp.ui.detail
 
+import android.transition.TransitionInflater
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -8,7 +10,6 @@ import com.emreozcan.cryptoapp.base.BaseFragment
 import com.emreozcan.cryptoapp.databinding.FragmentDetailBinding
 import com.emreozcan.cryptoapp.model.detail.CoinDetail
 import com.emreozcan.cryptoapp.model.detail.DetailResponse
-import com.emreozcan.cryptoapp.utils.Constants.API_KEY
 import com.emreozcan.cryptoapp.utils.loadImage
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,9 +23,31 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
     override val viewModel by viewModels<DetailViewModel>()
     private val args by navArgs<DetailFragmentArgs>()
 
-
     override fun onCreateFinished() {
-        viewModel.getDetail(API_KEY, args.symbol)
+        initTransitions()
+        initViews()
+        args.coin.symbol?.let {
+            viewModel.getDetail(it)
+        }
+    }
+
+    private fun initViews() = with(binding) {
+        imageViewDetailFragment.loadImage(args.coin.id.toString())
+        titleTextDetailFragment.text = args.coin.name
+        symbolTextDetailFragment.text = args.coin.symbol
+    }
+
+    private fun initTransitions() {
+        val symbol = args.coin.symbol
+
+        ViewCompat.setTransitionName(binding.imageViewDetailFragment, "image${symbol}")
+        ViewCompat.setTransitionName(binding.titleTextDetailFragment, "title${symbol}")
+        ViewCompat.setTransitionName(binding.symbolTextDetailFragment, "symbol${symbol}")
+
+        val animation =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = animation
+        sharedElementReturnTransition = animation
     }
 
     override fun initializeListeners() {}
@@ -47,22 +70,19 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
         val gson = Gson()
         val json = gson.toJson(it?.data)
         val jsonObject = JSONObject(json)
-        val jsonArray = jsonObject[args.symbol] as JSONArray
+        val jsonArray = jsonObject[args.coin.symbol.toString()] as JSONArray
 
         val coin = gson.fromJson(jsonArray.getJSONObject(0).toString(), CoinDetail::class.java)
 
         coin?.let {
             with(binding) {
-                ivDetail.loadImage(it.logo)
-                tvDetailTitle.text = it.name
-                tvDetailSymbol.text = it.symbol
-                tvDetailDescription.text = it.description
+                descriptionTextDetailFragment.text = it.description
             }
         }
     }
 
     private fun handleView(isLoading: Boolean = false) {
-        binding.detailGroup.isVisible = !isLoading
-        binding.pbDetail.isVisible = isLoading
+        binding.descriptionTextDetailFragment.isVisible = !isLoading
+        binding.progressBarDetailFragment.isVisible = isLoading
     }
 }

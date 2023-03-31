@@ -8,19 +8,20 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.emreozcan.cryptoapp.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:label="@string/home_fragment_toolbar_text"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.emreozcan.cryptoapp.ui.detail.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        android:label="@string/detail_fragment_toolbar_text"
+        tools:layout="@layout/fragment_detail">
         <argument
-            android:name="symbol"
-            app:argType="string" />
+            android:name="coin"
+            app:argType="com.emreozcan.cryptoapp.model.home.CryptoModel" />
     </fragment>
 </navigation>

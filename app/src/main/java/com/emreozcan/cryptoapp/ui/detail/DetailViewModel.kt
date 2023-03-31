@@ -20,11 +20,10 @@ class DetailViewModel @Inject constructor(private val repository: DetailReposito
     val onError: MutableLiveData<String?> = MutableLiveData()
 
     fun getDetail(
-        apiKey: String,
         symbol: String
     ) = viewModelScope.launch {
         isLoading.value = true
-        when (val request = repository.getDetail(apiKey, symbol)) {
+        when (val request = repository.getDetail(symbol)) {
             is NetworkResult.Success -> {
                 isLoading.value = false
                 detailResponse.value = request.data

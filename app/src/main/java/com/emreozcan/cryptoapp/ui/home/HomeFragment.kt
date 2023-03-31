@@ -1,69 +1,85 @@
 package com.emreozcan.cryptoapp.ui.home
 
-import android.os.Bundle
-import android.widget.Toast
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.paging.LoadState
 import com.emreozcan.cryptoapp.base.BaseFragment
 import com.emreozcan.cryptoapp.databinding.FragmentHomeBinding
-import com.emreozcan.cryptoapp.model.home.Data
-import com.emreozcan.cryptoapp.utils.Constants.API_KEY
-import com.emreozcan.cryptoapp.utils.Constants.LIMIT
+import com.emreozcan.cryptoapp.model.home.CryptoModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     FragmentHomeBinding::inflate
-) {
-    override val viewModel by viewModels<HomeViewModel>()
+), ItemClickListener {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getData(API_KEY, LIMIT)
-    }
+    override val viewModel by viewModels<HomeViewModel>()
+    private lateinit var cryptoAdapter: CryptoAdapter
 
     override fun onCreateFinished() {
+        initAdapter()
+        initRecyclerView()
     }
 
     override fun initializeListeners() {
-
-    }
-
-    override fun observeEvents() {
-        with(viewModel) {
-            cryptoResponse.observe(viewLifecycleOwner, Observer {
-                it?.let {
-                    it.data?.let { it1 -> setRecycler(it1) }
-                }
-            })
-            isLoading.observe(viewLifecycleOwner, Observer {
-                handleViews(it)
-            })
-
-            onError.observe(viewLifecycleOwner, Observer {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-            })
+        with(binding) {
+            retryButtonHomeFragment.setOnClickListener {
+                cryptoAdapter.retry()
+            }
         }
     }
 
-    private fun setRecycler(data: List<Data>) {
-        val mAdapter = HomeRecyclerAdapter(object : ItemClickListener {
-            override fun onItemClick(coin: Data) {
-                if (coin.symbol != null) {
-                    val navigation =
-                        HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin.symbol)
-                    Navigation.findNavController(requireView()).navigate(navigation)
-                }
-            }
-        })
-        binding.rvHome.adapter = mAdapter
-        mAdapter.setList(data)
+    override fun observeEvents() {
+        viewModel.cryptoResponse.observe(viewLifecycleOwner) {
+            cryptoAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
     }
 
-    private fun handleViews(isLoading: Boolean = false) {
-        binding.rvHome.isVisible = !isLoading
-        binding.pbHome.isVisible = isLoading
+    private fun initAdapter() {
+        cryptoAdapter = CryptoAdapter(this)
+        cryptoAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                progressBarHomeFragment.isVisible = loadState.source.refresh is LoadState.Loading
+                recyclerViewHomeFragment.isVisible = loadState.source.refresh is LoadState.NotLoading
+                retryButtonHomeFragment.isVisible = loadState.source.refresh is LoadState.Error
+                errorTextHomeFragment.isVisible = loadState.source.refresh is LoadState.Error
+
+                if (loadState.source.refresh is LoadState.Error) {
+                    errorTextHomeFragment.text =
+                        (loadState.source.refresh as LoadState.Error).error.localizedMessage
+                }
+            }
+        }
+    }
+
+    private fun initRecyclerView() {
+        binding.recyclerViewHomeFragment.apply {
+            setHasFixedSize(true)
+            this.adapter =
+                cryptoAdapter.withLoadStateFooter(footer = CryptoLoadStateAdapter { cryptoAdapter.retry() })
+            postponeEnterTransition()
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
+        }
+    }
+
+    override fun onItemClick(
+        coin: CryptoModel, imageView: ImageView, titleTextView: TextView, symbolTextView: TextView
+    ) {
+        if (coin.symbol != null) {
+            val extras = FragmentNavigatorExtras(
+                imageView to "image${coin.symbol}",
+                titleTextView to "title${coin.symbol}",
+                symbolTextView to "symbol${coin.symbol}"
+            )
+            val navigation = HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin)
+            Navigation.findNavController(requireView()).navigate(navigation, extras)
+        }
     }
 }
