@@ -7,7 +7,7 @@
 - Interceptor
 - DiffUtil
 - Paging3
-- SharedTransition Elements
+- Shared Transition Elements
 
 ve daha bir çok özellik ile uygulama güncellendi. 🎉</br>
 
